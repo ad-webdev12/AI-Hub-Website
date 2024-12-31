@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="img/ai-icon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hub</title>
+	    <link rel="icon" href="img/ai-logo-2.png" />
+
+    <style>
+        body {
+            background-color: black;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 10px;
+        }
+        .quiz-container {
+            margin: 1rem 0;
+        }
+        .quiz-question {
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        .quiz-answers label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .quiz-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            background-color: green;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+		.quiz-button:hover{
+			background-color: darkgreen;
+			transition: background .2s;
+		}
+        .quiz-results {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        /* Timeline Styles */
+        .timeline-container {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            background: #333;
+            height: 10px;
+        }
+        .timeline-progress {
+            width: 0%;
+            height: 100%;
+            background: aqua;
+            transition: width 0.5s ease;
+        }
+		
+	/*cool animation styles*/
+		.overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, .9);
+      z-index: 10;
+    }
+
+    .text {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #00bfff;
+      text-shadow: 0 0 20px #00bfff, 0 0 40px #0077cc;
+      animation: glow 1.5s ease-in-out infinite, flyAway 3s ease-in-out 2s forwards;
+      font-family: 'Arial', sans-serif;
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        text-shadow: 0 0 20px #00bfff, 0 0 70px #0077cc;
+      }
+      50% {
+        text-shadow: 0 0 30px #00ccff, 0 0 90px #0099ee;
+      }
+    }
+
+    @keyframes flyAway {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(2);
+        opacity: 0;
+      }
+    }
+     /*Toggle button for study music*/
+		.toggle-button {
+      width: 50px;
+      height: 25px;
+      border: none;
+      border-radius: 25px;
+      background: grey;
+      cursor: pointer;
+      outline: none;
+      position: absolute;
+	  top:155%;
+	  left:12%;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-button.on {
+      background: aqua;
+    }
+
+    .toggle-button::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-button.on::after {
+      transform: translateX(25px);
+    }
+	
+		.study{
+			color:aqua;
+			font-weight: 900;
+			font-size: 20px;
+			position: absolute;
+			top: 154.5%;
+			left: 1%;
+			text-shadow: 0 0 5px #00bfff, 0 0 10px #0077cc;
+		}
+    </style>
+</head>
+<body>
+	<!--COOL LOADING ANIMATION-->
+	<div class="overlay">
+    <div class="text">Are you ready to learn and start your AI journey?</div>
+  </div>
+	
+    <div class="content">
+        <h1>What is Artificial Intelligence?</h1>
+        <p>
+            Artificial Intelligence (AI) is the simulation of human intelligence by machines. It enables machines to perform tasks like learning, reasoning, and decision-making, mimicking human cognitive functions. Applications of AI include voice recognition, recommendation systems, autonomous vehicles, and more.
+        </p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/2ePf9rue1Ao" title="What is Artificial Intelligence? In 5 minutes." frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+        <!-- Game Placeholder -->
+        <div class="game-placeholder">
+            <h4>Interactive Game</h4>
+            <p>this is a placeholder</p>
+            <button onclick="simulateGameCompletion()">Complete Game</button>
+        </div>
+
+        <!-- Quiz Section -->
+        <h2>Quiz</h2>
+        <div class="quiz-container" id="quiz-container"></div>
+        <div class="quiz-results" id="quiz-results"></div>
+    </div>
+
+    <!-- Timeline at Bottom -->
+    <div class="timeline-container">
+        <div class="timeline-progress" id="timeline-progress"></div>
+    </div>
+
+	<!--Toggle btn for music-->
+	<button class="toggle-button" id="toggleButton"></button>
+	<audio id="audioPlayer" src="mozart-study.mp3"></audio>
+	<div class="study">Study Music</div>
+    <script>
+        const quizQuestions = [
+            {
+                question: "1. What is the full form of AI?",
+                answers: ["Augmented Intuition", "Authentic Idea", "Artificial Illusion", "Artificial Intelligence"],
+                correct: 3
+            },
+            {
+                question: "2. Which of these is an example of AI?",
+                answers: ["A calculator", "Siri or Alexa", "A microwave", "A light bulb"],
+                correct: 1
+            },
+            {
+                question: "3. What is the primary goal of AI?",
+                answers: ["To create new types of hardware", "To replace humans entirely", "To simulate human intelligence in machines", "To perform tasks without electricity"],
+                correct: 2
+            },
+            {
+                question: "4. How does AI improve over time?",
+                answers: ["By manually adding more data", "By learning from data and experiences", "By replacing its code weekly", "By restarting its system daily"],
+                correct: 1
+            },
+            {
+                question: "5. What is Machine Learning (ML)?",
+                answers: ["A branch of AI where machines learn from data", "A physical machine used for learning", "A type of programming language", "An app for teaching humans"],
+                correct: 0
+            },
+            {
+                question: "6. How is AI used in smartphones?",
+                answers: ["To increase battery life", "For features like voice assistants and facial recognition", "To improve screen resolution", "To enhance signal reception"],
+                correct: 1
+            },
+            {
+                question: "7. What are chatbots primarily used for?",
+                answers: ["Playing games with users", "Conducting financial transactions", "Simulating conversations and answering queries", "Sending emails automatically"],
+                correct: 2
+            },
+            {
+                question: "8. Which of these is a risk associated with AI?",
+                answers: ["Increased internet speed", "Loss of certain jobs", "Improved accuracy in tasks", "Reduced energy consumption"],
+                correct: 1
+            },
+            {
+                question: "9. Which industry has benefited significantly from AI advancements?",
+                answers: ["Agriculture", "Healthcare", "Entertainment", "All of the above"],
+                correct: 3
+            }
+        ];
+
+        let tasksCompleted = 0; // 1 for video, 1 for game, 1 for correct quiz
+        const totalTasks = 3; // video, game, quiz
+
+        function buildQuiz() {
+            const quizContainer = document.getElementById("quiz-container");
+            const quizResults = document.getElementById("quiz-results");
+            let currentQuizIndex = 0;
+            let score = 0;
+
+            const questionEl = document.createElement("div");
+            questionEl.className = "quiz-question";
+
+            const answersEl = document.createElement("div");
+            answersEl.className = "quiz-answers";
+
+            const nextButton = document.createElement("button");
+            nextButton.className = "quiz-button";
+            nextButton.innerText = "Next";
+
+            quizContainer.appendChild(questionEl);
+            quizContainer.appendChild(answersEl);
+            quizContainer.appendChild(nextButton);
+
+            function loadQuestion() {
+                const q = quizQuestions[currentQuizIndex];
+                questionEl.innerText = q.question;
+                answersEl.innerHTML = "";
+                q.answers.forEach((ans, idx) => {
+                    const label = document.createElement("label");
+                    const input = document.createElement("input");
+                    input.type = "radio";
+                    input.name = "quiz-answer";
+                    input.value = idx;
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(ans));
+                    answersEl.appendChild(label);
+                    const br = document.createElement("br");
+                    answersEl.appendChild(br);
+                });
+            }
+
+            loadQuestion();
+
+            nextButton.addEventListener("click", function () {
+                const selected = answersEl.querySelector("input[name='quiz-answer']:checked");
+                if (!selected) {
+                    alert("Please select an answer!");
+                    return;
+                }
+                const answerValue = parseInt(selected.value, 10);
+                if (answerValue === quizQuestions[currentQuizIndex].correct) {
+                    score++;
+                }
+                currentQuizIndex++;
+
+                if (currentQuizIndex < quizQuestions.length) {
+                    loadQuestion();
+                } else {
+                    quizContainer.innerHTML = "";
+                    quizResults.innerHTML = `You scored ${score} out of ${quizQuestions.length}!`;
+                    tasksCompleted++;
+                    updateTimeline();
+                }
+            });
+        }
+
+        function simulateGameCompletion() {
+            alert("You have completed the game!");
+            tasksCompleted++;
+            updateTimeline();
+        }
+
+        function updateTimeline() {
+            const width = (tasksCompleted / totalTasks) * 100;
+            document.getElementById("timeline-progress").style.width = width + "%";
+        }
+
+        buildQuiz();  // Initialize quiz
+		
+		 setTimeout(() => {
+      document.querySelector('.overlay').style.display = 'none';
+    }, 4000); // Remove the onload animation after the animation completes
+		
+		
+		//btn for music 
+		const button = document.getElementById('toggleButton');
+  const audio = document.getElementById('audioPlayer');
+
+  button.addEventListener('click', () => {
+    button.classList.toggle('on');
+
+    if (button.classList.contains('on')) {
+      audio.play();
+    } else {
+      audio.pause();
+      audio.currentTime = 0; // Reset audio
+    }
+  });
+    </script>
+	
+</body>
+</html>

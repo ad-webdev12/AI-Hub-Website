@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>AI Hub</title>
+    <!-- FONTS AND ICONS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+      integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+CO+Guides&display=swap" rel="stylesheet"/>
+    <link rel="icon" href="img/ai-logo-2.png" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+		  text-decoration: none;	
+      }
+      body {
+        margin: 0;
+        font-family: "Lato", Arial, sans-serif;
+        color: #333;
+        background-color: #f4f4f9;
+        /* Subtle background used in your existing code */
+        background-color: black;
+        background-position: center;
+        background-size: cover;
+        /* Some overflow hidden for animations */
+        overflow-x: hidden;
+      }
+
+      
+      /************************************
+       POPUP HEADER (MOVING TEXT)
+      *************************************/
+      #popup-header {
+        background-color: #ff9800;
+        color: white;
+        text-align: center;
+        padding: 10px 20px;
+        position: static;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+      }
+      #popup-header p {
+        margin: 0;
+        font-size: 16px;
+      }
+      #popup-header .close {
+        background: none;
+        border: none;
+        font-size: 20px;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.2s, color 0.2s;
+      }
+      #popup-header .close:hover {
+        color: black;
+        transform: scale(3);
+      }
+
+      /************************************
+       REGULAR HEADER / NAV
+      *************************************/
+      header {
+        background-color: #4caf50;
+        color: white;
+        padding: 1rem 0;
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      nav {
+        display: flex;
+        justify-content: center;
+        background-color: black;
+      }
+      nav a {
+        color: white;
+        padding: 14px 20px;
+        text-decoration: none;
+        text-align: center;
+      }
+      nav a:hover {
+        background-color: #575757;
+        color: lawngreen;
+      }
+
+      /************************************
+       HERO SECTION (GLITCH)
+      *************************************/
+      .hero {
+        text-align: center;
+        padding: 50px 20px;
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 1),
+            rgba(0, 0, 0, 0.6)
+          ),
+          url("img/ai-home-bg.webp");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: springgreen;
+        font-weight: 700;
+        font-family: "Courier New", monospace;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero h1 {
+        font-size: 3rem;
+        margin: 0;
+        position: relative;
+        display: inline-block;
+        color: #00ff00;
+        animation: glitch 1.5s infinite;
+      }
+      .hero p {
+        font-size: 1.5rem;
+        color: white;
+        position: relative;
+        animation: glitch 1.5s infinite;
+      }
+      @keyframes glitch {
+        0% {
+          text-shadow: 1px 1px 0 #ff0000, -0.2px -0.2px 0 #00ffff;
+        }
+        25% {
+          text-shadow: -1px 1px 0 #ff0000, 0.3px -0.3px 0 #00ffff;
+          transform: translate(-1px, 1px);
+        }
+        50% {
+          text-shadow: 1px -1px 0 #ff0000, -0.3px 0.3px 0 #00ffff;
+          transform: translate(1px, -1px);
+        }
+        75% {
+          text-shadow: -1px -1px 0 #ff0000, 0.2px 0.2px 0 #00ffff;
+          transform: translate(-1px, -1px);
+        }
+        100% {
+          text-shadow: 1px 1px 0 #ff0000, -0.2px -0.2px 0 #00ffff;
+          transform: translate(1px, 1px);
+        }
+      }
+      .hero::before,
+      .hero::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: inherit;
+        mix-blend-mode: multiply;
+        opacity: 0.7;
+        z-index: -1;
+      }
+      .hero::before {
+        animation: glitch-bg 1.2s infinite;
+      }
+      .hero::after {
+        animation: glitch-bg 1.4s infinite;
+      }
+      @keyframes glitch-bg {
+        0%,
+        100% {
+          clip-path: polygon(0 2%, 100% 2%, 100% 6%, 0 6%);
+        }
+        25% {
+          clip-path: polygon(0 30%, 100% 30%, 100% 34%, 0 34%);
+        }
+        50% {
+          clip-path: polygon(0 60%, 100% 60%, 100% 64%, 0 64%);
+        }
+        75% {
+          clip-path: polygon(0 90%, 100% 90%, 100% 94%, 0 94%);
+        }
+      }
+
+      /************************************
+       CONTENT SECTIONS
+      *************************************/
+      .content {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+        color: white;
+      }
+      .section {
+        margin-bottom: 50px;
+      }
+      .section h2 {
+        border-bottom: 2px solid #4caf50;
+        padding-bottom: 10px;
+        color: #4caf50;
+      }
+
+      /************************************
+       QUOTES
+      *************************************/
+      .quote-container {
+        text-align: center;
+        margin-top: 30px;
+        color: white;
+      }
+      .quote {
+        display: none;
+        font-size: 2rem;
+        color: white;
+        font-family: cursive, fantasy;
+      }
+      .quote.visible {
+        display: block;
+      }
+
+      /************************************
+       BLOG CARDS
+      *************************************/
+      .blog {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+      }
+      .blog-card {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 300px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+      .blog-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+      .blog-card .content {
+        padding: 15px;
+        text-decoration: none;
+      }
+      #blog a {
+        text-decoration: none;
+        color: black;
+      }
+      .blog-card .content h3 {
+        margin: 0;
+        color: #4caf50;
+      }
+      .blog-card .content p {
+        color: #333;
+      }
+      .blog-card:hover {
+        transform: scale(1.09);
+      }
+
+      /************************************
+       SHOWCASE YOUR WORK
+      *************************************/
+      #showcase {
+	  text-align: center;
+	  padding: 50px;
+	  background-color: black;
+	  border: 5px solid #4caf50; /* Border color */
+	  border-radius: 15px; /* Rounded corners */
+	  box-shadow: 0 0 15px 5px rgba(76, 175, 80, 0.7); /* Glowing effect */
+	  animation: showcaseGlow 2s ease-in-out infinite; /* Animation for glowing effect */
+	}
+
+	#showcase h2 {
+	  color: #4caf50;
+	  margin-bottom: 200px;
+	  animation: slideIn 2s ease-out; /* Slide-in animation for the heading */
+	}
+
+	#showcase p {
+	  color: white;
+	  text-align: center;
+	  margin-bottom: 200px;
+	  font-weight: 500;
+	  color: grey;
+	  font-size: 100px;
+	  opacity: 50%;
+	}
+
+	/* Glowing effect */
+	@keyframes showcaseGlow {
+	  0% {
+		box-shadow: 0 0 15px 5px rgba(76, 175, 80, 0.7);
+	  }
+	  50% {
+		box-shadow: 0 0 25px 15px rgba(76, 175, 80, 1);
+	  }
+	  100% {
+		box-shadow: 0 0 15px 5px rgba(76, 175, 80, 0.2);
+	  }
+	}
+
+      /************************************
+       LEARN SECTION TABS
+      *************************************/
+      
+ .learn-section {
+            margin-top: 30px;
+        }
+
+        .learn-section article {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .learn-section article h3 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+
+        .learn-section article p {
+            margin: 0;
+			color:#333;
+        }
+      
+      /************************************
+       FOOTER
+      *************************************/
+      footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #333;
+        color: white;
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.4),
+            rgba(0, 0, 0, 1)
+          ),
+          url("img/ai-home-bg.webp");
+        background-position: center;
+        background-size: cover;
+      }
+    </style>
+</head>
+<body>
+
+  <!-- POPUP HEADER FOR MOVING TEXT
+  <div id="popup-header">
+      <p id="moving-text">A new AI update is coming soon! Stay tuned...</p>
+      <button class="close" onclick="closePopupHeader()">&times;</button>
+  </div> -->
+
+  <!-- PAGE HEADER -->
+  <header>
+    AI Hub: Explore the Future of Artificial Intelligence
+  </header>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#blog">Blog</a>
+    <a href="#showcase">Showcase Your Work</a>
+    <a href="#learn">Learn</a>
+    <a href="#" onclick="changeLevel()">Change Your Level</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <div class="hero">
+    <h1>Welcome to AI Hub</h1>
+    <p>Your one-stop destination to learn, explore, and grow with AI.</p>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="content" id="home">
+    <!-- ABOUT SECTION (if needed) -->
+    <div class="section">
+      <h2>About AI Hub</h2>
+      <p>
+        AI Hub is dedicated to bridging the gap between AI tools and user
+        understanding. Learn AI concepts, stay updated on developments, and
+        discover how to use AI effectively.
+      </p>
+    </div>
+ <!-- LEARN SECTION -->
+  <div id="learn" class="content">
+   
+    <div class="section">
+        <h2>Learn AI Concepts: Advanced</h2>
+        <a href="what-is-ai.html"> <div class="learn-section">
+            <article>
+                <h3>1. Understanding Linear Regression</h3>
+                <p>Linear regression is a statistical method for modeling relationships between variables and predicting outcomes.</p>
+            </article>
+            <article>
+                <h3>2. Understanding Logistic Regression</h3>
+                <p>Logistic regression is used for classification tasks, predicting discrete outcomes like yes/no decisions.</p>
+            </article>
+            <article>
+                <h3>3. What is Overfitting and Underfitting?</h3>
+                <p>Overfitting happens when a model learns too much noise; underfitting occurs when it fails to capture the data's patterns.</p>
+            </article>
+            <article>
+                <h3>4. Gradient Descent Algorithm</h3>
+                <p>Gradient descent is an optimization technique used to minimize the loss function in machine learning models.</p>
+            </article>
+            <article>
+                <h3>5. What are Activation Functions?</h3>
+                <p>Activation functions like ReLU and Sigmoid help neural networks learn complex patterns by introducing non-linearity.</p>
+            </article>
+            <article>
+                <h3>6. Deep Dive into Neural Networks</h3>
+                <p>Explore the architecture of neural networks, including input, hidden, and output layers, and how they process data.</p>
+            </article>
+            <article>
+                <h3>7. Introduction to Convolutional Neural Networks (CNNs)</h3>
+                <p>CNNs are specialized for image data, utilizing filters to extract spatial features like edges and shapes.</p>
+            </article>
+            <article>
+                <h3>8. Understanding Recurrent Neural Networks (RNNs)</h3>
+                <p>RNNs process sequential data by maintaining memory of previous inputs, ideal for tasks like time series analysis.</p>
+            </article>
+            <article>
+                <h3>9. Hyperparameter Tuning</h3>
+                <p>Optimizing hyperparameters like learning rate and batch size to improve model performance.</p>
+            </article>
+            <article>
+                <h3>10. Loss Functions in AI</h3>
+                <p>Loss functions measure how well a model's predictions align with actual outcomes, guiding improvements during training.</p>
+            </article>
+            <article>
+                <h3>11. What is Backpropagation?</h3>
+                <p>Backpropagation is the process of updating neural network weights by minimizing the loss function.</p>
+            </article>
+            <article>
+                <h3>12. Support Vector Machines (SVMs)</h3>
+                <p>SVMs are supervised learning models used for classification and regression by finding optimal decision boundaries.</p>
+            </article>
+            <article>
+                <h3>13. Dimensionality Reduction Techniques</h3>
+                <p>Techniques like PCA and t-SNE reduce the number of features in data, simplifying complex datasets for analysis.</p>
+            </article>
+            <article>
+                <h3>14. What is a GAN (Generative Adversarial Network)?</h3>
+                <p>GANs consist of a generator and discriminator working together to create realistic data, such as images or audio.</p>
+            </article>
+            <article>
+                <h3>15. Introduction to Transformers in AI</h3>
+                <p>Transformers are the backbone of modern NLP models, utilizing self-attention mechanisms for sequence processing.</p>
+            </article>
+            <article>
+                <h3>16. Understanding Attention Mechanisms</h3>
+                <p>Attention mechanisms allow models to focus on relevant parts of input data, improving performance in NLP and vision tasks.</p>
+            </article>
+            <article>
+                <h3>17. Building Chatbots with NLP</h3>
+                <p>Create chatbots using AI models that understand and generate human-like responses to text inputs.</p>
+            </article>
+            <article>
+                <h3>18. What is Transfer Learning?</h3>
+                <p>Transfer learning leverages pre-trained models to solve new but similar tasks, saving time and resources.</p>
+            </article>
+            <article>
+                <h3>19. What is Explainable AI (XAI)?</h3>
+                <p>Explainable AI improves transparency by providing human-readable explanations for model predictions.</p>
+            </article>
+            <article>
+                <h3>20. Deploying AI Models</h3>
+                <p>Learn how to take trained models from development to production, integrating them into applications.</p>
+            </article>
+            <article>
+                <h3>21. Adversarial Attacks in AI</h3>
+                <p>Explore how malicious inputs can deceive AI models and strategies to mitigate these vulnerabilities.</p>
+            </article>
+            <article>
+                <h3>22. Ethics and Bias Mitigation in AI</h3>
+                <p>Advanced techniques to reduce biases and ensure fairness in AI systems.</p>
+            </article>
+            <article>
+                <h3>23. Federated Learning</h3>
+                <p>Federated learning enables AI to train across decentralized devices without sharing raw data.</p>
+            </article>
+            <article>
+                <h3>24. Natural Language Generation (NLG)</h3>
+                <p>NLG involves creating human-like text from structured data, used in chatbots and report generation.</p>
+            </article>
+            <article>
+                <h3>25. Reinforcement Learning Algorithms</h3>
+                <p>Study algorithms like Q-learning and Deep Q-Networks (DQN) for decision-making tasks.</p>
+            </article>
+            <article>
+                <h3>26. Building AI Recommendation Systems</h3>
+                <p>Learn to create recommendation systems using collaborative filtering and deep learning techniques.</p>
+            </article>
+            <article>
+                <h3>27. Scaling AI Models</h3>
+                <p>Understand techniques for handling large-scale AI applications, including distributed computing and model parallelism.</p>
+            </article>
+            <article>
+                <h3>28. AI in Edge Computing</h3>
+                <p>Explore how AI operates on IoT and edge devices for low-latency, on-device processing.</p>
+            </article>
+            <article>
+                <h3>29. AI and Quantum Computing</h3>
+                <p>Learn about the intersection of AI and quantum technologies for solving complex computational problems.</p>
+            </article>
+            <article>
+                <h3>30. Future Trends in AI</h3>
+                <p>Stay ahead by exploring cutting-edge advancements and emerging applications in AI.</p>
+            </article> 
+        </div></a> 
+    </div>
+</div>
+	  
+    <!-- BLOG SECTION -->
+    <div id="blog" class="section">
+      <h2>Latest Blogs</h2>
+      <div class="blog">
+        <a href="blog1.html">
+          <div class="blog-card">
+            <img src="img/ai-work.webp" alt="AI Tool Tips" />
+            <div class="content">
+              <h3>Top 5 AI Tools for Productivity</h3>
+              <p>
+                Discover the best AI tools to streamline your work and boost
+                efficiency.
+              </p>
+            </div>
+          </div>
+        </a>
+        <a href="blog1.html">
+          <div class="blog-card">
+            <img src="img/ai-ethics.webp" alt="AI Ethics" />
+            <div class="content">
+              <h3>The Ethics of Artificial Intelligence</h3>
+              <p>
+                Understand the ethical dilemmas and responsibilities of AI in
+                modern society.
+              </p>
+            </div>
+          </div>
+        </a>
+        <a href="blog1.html">
+          <div class="blog-card">
+            <img src="img/ai-future.webp" alt="AI Future" />
+            <div class="content">
+              <h3>How AI is Shaping the Future</h3>
+              <p>
+                Explore the transformative impact of AI on industries
+                worldwide.
+              </p>
+            </div>
+          </div>
+        </a>
+        <a href="blog1.html">
+          <div class="blog-card">
+            <img src="img/llm-vs-fm.webp" alt="AI Future" />
+            <div class="content">
+              <h3>Large Language Models vs Foundational Models</h3>
+              <p>
+                Dive into the differences and applications of these two powerful
+                AI frameworks.
+              </p>
+            </div>
+          </div>
+        </a>
+        <a href="blog1.html">
+          <div class="blog-card">
+            <img src="img/willow.webp" alt="Willow!" />
+            <div class="content">
+              <h3>Meet Willow</h3>
+              <p>
+                Discover Willow, the AI companion redefining personal digital
+                assistance.
+              </p>
+            </div>
+          </div>
+        </a>
+        <a href="blog1.html">
+          <div class="blog-card">
+            <img src="img/emotions.webp" alt="AI Emotion Tracking" />
+            <div class="content">
+              <h3>AI and the Ethics of Emotion Detection</h3>
+              <p>
+                What are the moral implications of AI systems reading human
+                emotions?
+              </p>
+            </div>
+          </div>
+        </a>
+        <a href="blog1.html">
+          <div class="blog-card">
+            <img src="img/emotions.webp" alt="AI Emotion Tracking" />
+            <div class="content">
+              <h3>How AI is Transforming Climate Predictions</h3>
+              <p>
+                Explore how cutting-edge AI models are tackling global
+                environmental challenges.
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- QUOTES SECTION -->
+    <div id="quotes" class="section">
+      <h2>Inspirational AI Quotes</h2>
+      <div class="quote-container">
+        <div class="quote visible">
+          "Artificial Intelligence is the new electricity." - Andrew Ng
+        </div>
+        <div class="quote">
+          "The key to artificial intelligence has always been the representation." - Jeff Hawkins
+        </div>
+        <div class="quote">
+          "AI will be the best or worst thing ever for humanity." - Elon Musk
+        </div>
+        <div class="quote">
+          "The future is here, and it's powered by AI." - Unknown
+        </div>
+        <div class="quote">"AI is not magic; it's just programming." - Unknown</div>
+        <div class="quote">
+          "Machine intelligence is the last invention humanity will ever need." - Nick Bostrom
+        </div>
+        <div class="quote">
+          "The advance of AI is both exciting and terrifying." - Bill Gates
+        </div>
+        <div class="quote">
+          "Artificial intelligence is a tool, not a threat." - Rodney Brooks
+        </div>
+        <div class="quote">
+          "The real question is, when will we draft an AI Bill of Rights?" - Gray Scott
+        </div>
+        <div class="quote">
+          "AI is the next big wave, shaping the future of everything." - Sundar Pichai
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHOWCASE YOUR WORK SECTION -->
+  <div id="showcase" class="content">
+    <h2>Showcase Your Work</h2>
+    <p>No projects on display yet</p>
+  </div>
+
+  <!-- CONTACT (OPTIONAL) -->
+  <div id="contact" class="content section">
+    <h2>Contact</h2>
+    <!--at <a href="mailto:info@aihub.com">info@aihub.com-->
+    <p>For inquiries, please reach us at <a href="mailto:aaravdey18@gmail.com">aaravdey18@gmail.com </a></p>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2024 AI Hub. All rights reserved.</p>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    /************************************
+     POPUP HEADER (MOVING TEXT)
+    *************************************/
+    function closePopupHeader() {
+      document.getElementById("popup-header").style.display = "none";
+    }
+    const movingText = document.getElementById("moving-text");
+    let position = 0;
+    let direction = 1;
+    const speed = 2; // Speed of movement
+
+    function moveText() {
+      const popupWidth = document.getElementById("popup-header").offsetWidth;
+      const textWidth = movingText.offsetWidth;
+      position += direction * speed;
+      if (position <= 0 || position + textWidth >= popupWidth) {
+        direction *= -1; // Reverse direction on collision
+      }
+      movingText.style.left = position + "px";
+      requestAnimationFrame(moveText);
+    }
+    movingText.style.position = "relative";
+    moveText();
+
+    /************************************
+     ONLOAD POPUP / USER LEVEL SELECTION
+    *************************************/
+    let userLevel = null;
+
+    function selectUserLevel(level) {
+      userLevel = level;
+      document.getElementById("intro-popup").style.display = "none";
+
+    }
+
+    // function to let user manually change level later
+    function changeLevel() {
+		window.location.href = "index.html";    
+     }
+
+    
+    /************************************
+     ROTATE QUOTES
+    *************************************/
+    let quotes = document.querySelectorAll(".quote");
+    let currentQuoteIndex = 0;
+    function rotateQuotes() {
+      quotes[currentQuoteIndex].classList.remove("visible");
+      currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+      quotes[currentQuoteIndex].classList.add("visible");
+    }
+    setInterval(rotateQuotes, 3000);
+
+  </script>
+
+</body>
+</html>

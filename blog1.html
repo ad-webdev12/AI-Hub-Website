@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Blog</title>
+    <link rel="icon" href="img/ai-icon.png">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            line-height: 1.6;
+            text-align: center;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        .header {
+            background-image: linear-gradient(rgba(0, 0, 0, 1),rgba(0, 0, 0, 0.6)),url("img/bg-2.webp");
+			background-position: center;
+			background-size: cover;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #4caf50;
+        }
+
+        /* Content Styles */
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .content h2, .content h3 {
+            color: #4caf50;
+            margin-bottom: 10px;
+        }
+
+        .content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Image Styles */
+        .content img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Button Styles */
+        .add-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #121212;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .add-btn:hover {
+            background-color: #45a049;
+            color: #fff;
+        }
+
+        /* Footer Styles */
+        footer {
+            margin-top: 30px;
+            padding: 10px;
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                font-size: 1rem;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .add-btn {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>AI Blog</h1>
+        <p>Insights on AI - Updated on 12/16/24</p>
+    </header>
+    <div class="content">
+        <h2>Foundational vs. Large Language Models</h2>
+        <h3>Introduction</h3>
+        <p>So what even is a model?  Well, It is a representation of a person, thing or of a structure. In terms of AI, it’s a program that is trained on datasets to be able to recognize patterns, and make decisions without any kind of human intervention. They use all sorts of complex algorithms, neural networks and much more to be able to isolate and classify relevant data.</p>
+       
+        <h3>LLMs</h3>
+        <p>LLMs or Large Language Models are a type of AI model which is trained on massive amounts of text data. Then it uses something known as Convolutional Neural Networks (CNN’s) to perform various tasks such as generating. analyzing, translating  text. AI’s capability to do this is known as Natural Language Processing (NLP). LLMs have many applications in today’s world varying across multiple fields. From customer service chat bots to boosting efficiency of search engines. .</p>
+       
+        <h3>Foundational Models</h3>
+        <p>Foundational Models are pretty much the same as LLMs. However, there are some core differences. The three core differences, S.A.S, are Scope, Application and Sophistication. Let's tackle them one by one. First off, foundational models cater to a wider range of tasks because of their distinctive ability to process data sets composed of text, audio, video and more. Due to this a foundational model can perform various tasks, whereas LLMs are specialized in one or two tasks. Oftentimes, FM’s can work with smaller datasets and are more versatile. Though, this means that they are often inaccurate especially when it comes to historical or scientific information. Businesses prefer using LLMs as they are much more reliable and accurate. Let’s take a look at an example. I asked both types of models to correct a sentence that is already grammatically correct.</p>
+       
+        <img src="img/prompt.png" alt="AI Model Example">
+
+        <h3>Leading Companies</h3>
+        <p>LWhat are some leading companies that use foundation models? Companies such as Meta, Anthropic, and Amazon Rekognition all use foundation models in some capacity. Companies that use LLMs are more inclined towards complex chatbots and research based such as GPT-4, Llama, Claude, etc.</p>
+
+        <a href="mailto:example@example.com" class="add-btn">Add your own! Email now.</a>
+    </div>
+    <footer>
+        &copy; 2024 AI Blog. All Rights Reserved.
+    </footer>
+</body>
+</html>
